@@ -3,9 +3,17 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, Date, Fore
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base, Session  
 from fastapi import FastAPI, Depends
 
-DATABASE_URL = os.getenv("DATABASE_URL", "mssql+pyodbc://azureadmin:rootpwSprint4@jarvisSprint4Server.database.windows.net/jarvisSprint4Banco?driver=ODBC+Driver+17+for+SQL+Server")
+CONEXAO  = os.getenv("CONEXAO")
+SERVIDOR = os.getenv("SERVIDOR")
+BANCO    = os.getenv("BANCO")
+USUARIO  = os.getenv("USUARIO")
+## NÃO UTILIZE "@" COMO PARTE DA SENHA
+SENHA    = os.getenv("SENHA")
+
+DATABASE_URL = f"mssql+pyodbc://{USUARIO}:{SENHA}@{SERVIDOR}/{BANCO}?driver={CONEXAO}"
 
 engine = create_engine(DATABASE_URL)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()  
 
